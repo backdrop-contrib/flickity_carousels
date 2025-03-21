@@ -2,3 +2,4 @@ type = module
 name = Flickity Carousels
 description = Touch, responsive, flickable carousels for views and fields
 backdrop = 1.x
+dependencies[] = image
