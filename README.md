@@ -1,0 +1,67 @@
+# Flickity Carousels
+
+Carousels, sliders and galleries for fields and views, utilizing the
+capabilities of [Flickity](https://flickity.metafizzy.co/).
+
+Ships with two field formatters and two views style plugins.
+Flick, swipe, click through your content - also supports keyboard navigation.
+
+## Features
+
+### Field formatters
+
+#### Flickity gallery
+
+Create stunning image galleries with thumbnail navigation from any multi-value
+image field within minutes.
+
+Supported field types: image
+
+#### Flickity carousel
+
+Rotating banners from image or long text fields, swipe through photos or
+chapters of text.
+
+Supported field types: image, text_long
+
+### Views styles
+
+#### Flickity carousel with sidebar
+
+Showcase news or products, anything you can build from nodes, users, or any kind
+of views fields. With automatic button sidebar.
+
+
+#### Flickity carousel
+
+The most flexible one, anything you can build with views, even thumbnail or text
+navigations, if using Flickity carousel as attachment of a Flickity carousel.
+
+
+## Installation
+
+Install this module using the official 
+  [Backdrop CMS instructions](https://docs.backdropcms.org/documentation/extend-with-modules)
+
+## Dependencies
+
+- image (core)
+
+## Issues
+
+Bugs and Feature requests should be reported in the 
+ [Issue Queue](https://github.com/backdrop-contrib/flickity_carousels/issues)
+
+## Current Maintainers
+
+- [Indigoxela](https://github.com/indigoxela)
+
+## Credits
+
+Bundles [Flickity](https://github.com/metafizzy/flickity), a versatile, yet
+compact JavaScript library for touch enabled, responsive, flickable carousels.
+Flickity is licensed under GPLv3 and maintained on GitHub by Metafizzy 🌈🐻.
+
+## License
+
+This project is GPLv3 software. See the LICENSE.txt file in this directory for complete text.
