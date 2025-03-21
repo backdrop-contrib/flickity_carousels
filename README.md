@@ -8,7 +8,7 @@ Flick, swipe, click through your content - also supports keyboard navigation.
 
 ## Features
 
-### Field formatters
+### Field formatters:
 
 #### Flickity gallery
 
@@ -17,7 +17,7 @@ Flick, swipe, click through your content - also supports keyboard navigation.
 Create stunning image galleries with thumbnail navigation from any multi-value
 image field within minutes.
 
-Supported field types: image
+*Supported field type:* image
 
 #### Flickity carousel
 
@@ -26,9 +26,9 @@ Supported field types: image
 Rotating banners from image or long text fields, swipe through photos or
 chapters of text.
 
-Supported field types: image, text_long
+*Supported field types:* image, text_long
 
-### Views styles
+### Views styles:
 
 #### Flickity carousel with sidebar
 
