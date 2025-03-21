@@ -34,8 +34,8 @@ chapters of text.
 
 ![carousel with sidebar](https://raw.githubusercontent.com/backdrop-contrib/flickity_carousels/1.x-1.x/screenshots/sidebar.png)
 
-Showcase news or products, anything you can build from nodes, users, or any kind
-of views fields. With automatic button sidebar.
+Showcase news or products, anything you can build from nodes, user accounts, or
+any kind of views fields. With automatic button sidebar.
 
 
 #### Flickity carousel
