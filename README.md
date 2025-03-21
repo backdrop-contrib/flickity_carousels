@@ -12,12 +12,16 @@ Flick, swipe, click through your content - also supports keyboard navigation.
 
 #### Flickity gallery
 
+![gallery](https://raw.githubusercontent.com/backdrop-contrib/flickity_carousels/1.x-1.x/screenshots/gallery.png)
+
 Create stunning image galleries with thumbnail navigation from any multi-value
 image field within minutes.
 
 Supported field types: image
 
 #### Flickity carousel
+
+![carousel](https://raw.githubusercontent.com/backdrop-contrib/flickity_carousels/1.x-1.x/screenshots/carousel.png)
 
 Rotating banners from image or long text fields, swipe through photos or
 chapters of text.
@@ -28,11 +32,15 @@ Supported field types: image, text_long
 
 #### Flickity carousel with sidebar
 
+![carousel with sidebar](https://raw.githubusercontent.com/backdrop-contrib/flickity_carousels/1.x-1.x/screenshots/sidebar.png)
+
 Showcase news or products, anything you can build from nodes, users, or any kind
 of views fields. With automatic button sidebar.
 
 
 #### Flickity carousel
+
+![carousel in views](https://raw.githubusercontent.com/backdrop-contrib/flickity_carousels/1.x-1.x/screenshots/views.png)
 
 The most flexible one, anything you can build with views, even thumbnail or text
 navigations, if using Flickity carousel as attachment of a Flickity carousel.
