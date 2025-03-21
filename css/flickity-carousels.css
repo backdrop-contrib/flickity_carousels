@@ -1,0 +1,121 @@
+/* experimental stuff for now... */
+.flickity-carousel {
+  margin-bottom: 2em; /* dots need some space... based on css class? */
+}
+
+/* Prevent button covering too much of content. */
+.flickity-carousel.direction-ltr .flickity-prev-next-button.previous,
+.flickity-carousel.direction-rtl .flickity-prev-next-button.next {
+  left: -0.5em;
+}
+.flickity-carousel.direction-ltr .flickity-prev-next-button.next,
+.flickity-carousel.direction-rtl .flickity-prev-next-button.previous {
+  right: -0.5em;
+}
+
+/* Settings via wrapper item class. */
+.flickity-carousel.cell-full-height .carousel-item {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.flickity-carousel.center-align .cell-inner {
+  align-self: center;
+  align-content: center;
+}
+.flickity-carousel .cell-inner {
+  flex-grow: 1;
+}
+.flickity-carousel.cell-padding .cell-inner {
+  margin-inline: 1em;
+}
+.flickity-carousel.perpage-1 .carousel-item {
+  width: 100%;
+}
+.flickity-carousel.perpage-2 .carousel-item {
+  width: 50%;
+}
+.flickity-carousel.perpage-3 .carousel-item {
+  width: 33.3333%;
+}
+.flickity-carousel.perpage-4 .carousel-item {
+  width: 25%;
+}
+.flickity-carousel.perpage-5 .carousel-item {
+  width: 20%;
+}
+.flickity-carousel.perpage-6 .carousel-item {
+  width: 16.6666%;
+}
+.flickity-carousel.perpage-7 .carousel-item {
+  width: 14.2857%;
+}
+/* Carousel with buttons in sidebar. */
+.flickity-carousel-sidebar-wrapper .button-sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+.flickity-carousel-sidebar-wrapper .button-sidebar button {
+  padding: .5em 1em;
+  border: none;
+  flex-grow: 1;
+  /* opinionated colors... */
+  background: #f7f7f7;
+  color: #444;
+}
+.flickity-carousel-sidebar-wrapper .button-sidebar button.active {
+  background: #0074bd;/* also opinionated */
+  color: #fff;
+}
+@media (min-width: 62em) {
+  .flickity-carousel-sidebar-wrapper {
+    display: grid;
+  }
+  /* Caution: "grid" automatically switches directions, which would normally be
+   cool, but not in this case. */
+  [dir="rtl"] .flickity-carousel-sidebar-wrapper.sidebar-right,
+  .flickity-carousel-sidebar-wrapper.sidebar-left {
+    grid-template-columns: 14em auto;
+    grid-template-areas: "nav main";
+  }
+  [dir="rtl"] .flickity-carousel-sidebar-wrapper.sidebar-left,
+  .flickity-carousel-sidebar-wrapper.sidebar-right {
+    grid-template-columns: auto 14em;
+    grid-template-areas: "main nav";
+  }
+  .flickity-carousel-sidebar-wrapper .button-sidebar {
+    flex-direction: column;
+    grid-area: nav;
+  }
+  .flickity-carousel-sidebar-wrapper .flickity-carousel {
+    grid-area: main;
+    margin: 0;
+  }
+  .flickity-carousel-sidebar-wrapper .cell-inner article {
+    margin: 0;
+    padding: 0;
+  }
+  .flickity-carousel-sidebar-wrapper.sidebar-right .cell-inner {
+    margin-right: 2em;
+  }
+  .flickity-carousel-sidebar-wrapper.sidebar-left .cell-inner {
+    margin-left: 2em;
+  }
+}
+
+/* Image galleries. */
+.flickity-gallery-wrapper .gallery-main {
+  margin-bottom: 8px;
+}
+.flickity-gallery-wrapper .gallery-thumbs .cell-inner {
+  padding: 4px;
+  max-width: 170px;
+}
+.flickity-gallery-wrapper .gallery-thumbs .is-nav-selected .cell-inner img {
+  outline: 2px solid #42b8d2;/* @todo another opinionated color. */
+}
+.flickity-gallery-wrapper .gallery-main img,
+.flickity-gallery-wrapper .gallery-thumbs img {
+  vertical-align: bottom;
+}

@@ -1,0 +1,482 @@
+<?php
+/**
+ * @file
+ */
+require_once __DIR__ . '/flickity_carousels.formatter_form.inc';
+
+/**
+ * Implements hook_views_api().
+ */
+function flickity_carousels_views_api() {
+  return array(
+    'api' => 3,
+  );
+}
+
+/**
+ * Implements hook_autoload_info().
+ */
+function flickity_carousels_autoload_info() {
+  return array(
+    'flickity_carousels_plugin_style_default' => 'views/flickity_carousels_plugin_style_default.php',
+    'flickity_carousels_plugin_style_sidebar' => 'views/flickity_carousels_plugin_style_sidebar.php',
+  );
+}
+
+/**
+ * Implements hook_library_info().
+ */
+function flickity_carousels_library_info() {
+  $module_path = backdrop_get_path('module', 'flickity_carousels');
+  $libraries['flickity'] = array(
+    'title' => 'Flickity',
+    'version' => '3.0.0',
+    'website' => 'https://flickity.metafizzy.co',
+    'js' => array(
+      $module_path . '/libraries/flickity/flickity.pkgd.min.js' => array(),
+      $module_path . '/libraries/flickity/flickity-fade.js' => array(),
+      $module_path . '/libraries/flickity/as-nav-for.js' => array(),
+    ),
+    'css' => array(
+      $module_path . '/libraries/flickity/flickity.min.css' => array(),
+      $module_path . '/libraries/flickity/flickity-fade.css' => array(),
+    ),
+  );
+
+  $info = system_get_info('module', 'flickity_carousels');
+  $libraries['backdrop.flickity'] = array(
+    'title' => 'Flickity Backdrop integration',
+    'version' => $info['version'],
+    'js' => array(
+      $module_path . '/js/flickity-carousels.js' => array(),
+    ),
+    'css' => array(
+      $module_path . '/css/flickity-carousels.css' => array(),
+    ),
+    'dependencies' => array(
+      array('flickity_carousels', 'flickity'),
+    ),
+  );
+  return $libraries;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function flickity_carousels_theme() {
+  $path = backdrop_get_path('module', 'flickity_carousels');
+  return array(
+    'flickity_carousel_field' => array(
+      'variables' => array(
+        'label' => '',
+        'label_hidden' => TRUE,
+        'items' => array(),
+        'wrapper_classes' => array(),
+        'carousel_classes' => array(),
+        'carousel_attributes' => array(),
+        'item_classes' => array(),
+        'field_type' => NULL,
+        'field_name' => NULL,
+      ),
+      'template' => 'flickity-carousel-field',
+      'path' => $path . '/templates',
+    ),
+    'flickity_gallery_field' => array(
+      'variables' => array(
+        'label' => '',
+        'label_hidden' => TRUE,
+        'wrapper_classes' => array(),
+        'main_items' => array(),
+        'main_classes' => array(),
+        'main_attributes' => array(),
+        'thumb_items' => array(),
+        'thumb_classes' => array(),
+        'thumb_attributes' => array(),
+        'item_classes' => array(),
+        'field_name' => NULL,
+      ),
+      'template' => 'flickity-gallery-field',
+      'path' => $path . '/templates',
+    ),
+  );
+}
+
+/**
+ * Preprocess flickity-carousel-field.tpl.php.
+ */
+function template_preprocess_flickity_carousel_field(&$variables) {
+  $variables['theme_hook_suggestions'][] = 'flickity_carousel_field__type__' . $variables['field_type'];
+  $variables['theme_hook_suggestions'][] = 'flickity_carousel_field__name__' . $variables['field_name'];
+}
+
+/**
+ * Preprocess flickity-gallery-field.tpl.php.
+ */
+function template_preprocess_flickity_gallery_field(&$variables) {
+  $variables['theme_hook_suggestions'][] = 'flickity_gallery_field__name__' . $variables['field_name'];
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function flickity_carousels_field_formatter_info() {
+  $formats = array();
+  $formats['flickity_carousel'] = array(
+    'label' => t('Flickity carousel'),
+    'field types' => array(
+      'image',
+      'text_long',
+    ),
+    'settings' => array(
+      'image_style' => NULL,
+      'image_caption' => 'none',
+      'effect' => 'slide',
+      'prevnext' => TRUE,
+      'pagedots' => TRUE,
+      'perpage' => 1,
+      'moveby' => 1,
+      'wraparound' => FALSE,
+      'freescroll' => FALSE,
+      'breakpoint' => 48,
+      'cellalignmiddle' => FALSE,
+      'cellpadding' => FALSE,
+      'direction' => 'ltr',
+      'autoplay' => 0,
+      'speed' => 'default',
+    ),
+  );
+  $formats['flickity_gallery'] = array(
+    'label' => t('Flickity gallery'),
+    'field types' => array(
+      'image',
+    ),
+    'settings' => array(
+      'image_style_main' => 'large',
+      'image_style_thumbs' => 'thumbnail',
+      'effect' => 'fade',
+      'prevnext_main' => TRUE,
+      'prevnext_thumbs' => TRUE,
+    ),
+  );
+  return $formats;
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function flickity_carousels_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  $classes = array('field');
+  $classes[] = 'field-name-' . backdrop_html_class($field['field_name']);
+  $classes[] = 'field-type-' . backdrop_html_class($field['type']);
+  $settings = $display['settings'];
+
+  // Flickity carousels.
+  if ($display['type'] == 'flickity_carousel') {
+    $carousel_items = array();
+    if ($field['type'] == 'image') {
+      foreach ($items as $delta => $item) {
+        $variables = array(
+          'uri' => $item['uri'],
+          'alt' => $item['alt'],
+          'width' => $item['width'],
+          'height' => $item['height'],
+        );
+        if (!empty($item['title'])) {
+          $variables['title'] = $item['title'];
+        }
+
+        if (!empty($settings['image_style'])) {
+          $variables['style_name'] = $settings['image_style'];
+          $carousel_items[$delta] = theme('image_style', $variables);
+        }
+        else {
+          $carousel_items[$delta] = theme('image', $variables);
+        }
+
+        if ($settings['image_caption'] != 'none') {
+          $type = $settings['image_caption'];
+          if (!empty($item[$type])) {
+            $carousel_items[$delta] .= '<div class="image-caption">' . check_plain($item[$type]) . '</div>';
+          }
+        }
+      }
+    }
+    elseif ($field['type'] == 'text_long') {
+      foreach ($items as $delta => $item) {
+        $carousel_items[] = $item['safe_value'];
+      }
+    }
+
+    $element['#theme'] = 'flickity_carousel_field';
+    // For theme_hook_suggestions.
+    $element['#field_type'] = $field['type'];
+    $element['#field_name'] = $field['field_name'];
+    // We also have to take care of the label, as we bypass theme_field(), but we
+    // ignore "inline", as that never makes sense with a slider, which is always a
+    // block element.
+    $element['#label'] = check_plain($instance['label']);
+    $element['#label_hidden'] = ($display['label'] == 'hidden');
+    $element['#items'] = $carousel_items;
+    $element['#wrapper_classes'] = $classes;
+
+    $carousel_classes = array('flickity-carousel');
+    if ($settings['cellalignmiddle']) {
+      $carousel_classes[] = 'center-align';
+    }
+    if ($settings['cellpadding']) {
+      $carousel_classes[] = 'cell-padding';
+    }
+    if ($settings['perpage']) {
+      $carousel_classes[] = 'perpage-' . $settings['perpage'];
+    }
+    $data = _flickity_carousels_options_from_settings($settings);
+    if ($data['rightToLeft']) {
+      $carousel_classes[] = 'direction-rtl';
+    }
+    else {
+      $carousel_classes[] = 'direction-ltr';
+    }
+    $element['#carousel_classes'] = $carousel_classes;
+
+    $element['#carousel_attributes']['data-flickity-options'] = json_encode($data);
+
+    $element['#item_classes'] = array('carousel-item');
+  }
+  // Image gallery with thumbnails.
+  elseif ($display['type'] == 'flickity_gallery') {
+    $gallery_items = $thumb_items = array();
+
+    foreach ($items as $delta => $item) {
+      $variables = array(
+        'uri' => $item['uri'],
+        'alt' => $item['alt'],
+        'width' => $item['width'],
+        'height' => $item['height'],
+      );
+      if (!empty($item['title'])) {
+        $variables['title'] = $item['title'];
+      }
+
+      if (!empty($settings['image_style_main'])) {
+        $variables['style_name'] = $settings['image_style_main'];
+        $gallery_items[$delta] = theme('image_style', $variables);
+      }
+      else {
+        $gallery_items[$delta] = theme('image', $variables);
+      }
+      if (!empty($settings['image_style_thumbs'])) {
+        $variables['style_name'] = $settings['image_style_thumbs'];
+        $thumb_items[$delta] = theme('image_style', $variables);
+      }
+      else {
+        $thumb_items[$delta] = theme('image', $variables);
+      }
+
+    }
+    $classes[] = 'flickity-gallery-wrapper';
+    $element['#theme'] = 'flickity_gallery_field';
+    $element['#field_name'] = $field['field_name'];
+    $element['#label'] = check_plain($instance['label']);
+    $element['#label_hidden'] = ($display['label'] == 'hidden');
+    $element['#wrapper_classes'] = $classes;
+    $element['#main_items'] = $gallery_items;
+    $element['#thumb_items'] = $thumb_items;
+    $element['#main_attributes']['data-flickity-options'] = json_encode(array(
+      'breakpoint' => 0,
+      'resize' => FALSE,
+      'fade' => ($settings['effect'] == 'fade'),
+      'pageDots' => FALSE,
+      'prevNextButtons' => ($settings['prevnext_main']),
+    ));
+
+    $main_classes = array('flickity-carousel', 'perpage-1', 'center-align', 'gallery-main');
+    $unique_main_class = 'gallery-main-' . backdrop_random_key(8);
+    $main_classes[] = $unique_main_class;
+    $element['#thumb_attributes']['data-flickity-options'] = json_encode(array(
+      'breakpoint' => 0,
+      'resize' => FALSE,
+      'contain' => TRUE,
+      'pageDots' => FALSE,
+      'prevNextButtons' => ($settings['prevnext_thumbs']),
+      'freeScrolling' => TRUE,
+      'groupCells' => TRUE,
+      'moveBy' => 0,
+      'asNavFor' => '.' . $unique_main_class,
+    ));
+
+    $thumb_classes = array('flickity-carousel', 'center-align', 'gallery-thumbs');
+    global $language;
+    if ($language->direction == LANGUAGE_RTL) {
+      $main_classes[] = 'direction-rtl';
+      $thumb_classes[] = 'direction-rtl';
+      $element['#main_attributes']['rightToLeft'] = TRUE;
+      $element['#thumb_attributes']['rightToLeft'] = TRUE;
+    }
+    else {
+      $main_classes[] = 'direction-ltr';
+      $thumb_classes[] = 'direction-ltr';
+    }
+    $element['#main_classes'] = $main_classes;
+    $element['#thumb_classes'] = $thumb_classes;
+    $element['#item_classes'] = array('carousel-item');
+  }
+
+  $element['#attached']['library'][] = array(
+    'flickity_carousels',
+    'backdrop.flickity',
+  );
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function flickity_carousels_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  if (empty($field)) {
+    return;
+  }
+  $element = array();
+  $display_type = $instance['display'][$view_mode]['type'];
+
+  if ($display_type == 'flickity_carousel') {
+    $element = _flickity_carousels_populate_formatter_form_default($field, $instance, $view_mode);
+  }
+  elseif ($display_type == 'flickity_gallery') {
+    $element = _flickity_carousels_populate_formatter_form_gallery($field, $instance, $view_mode);
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function flickity_carousels_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $settings = $instance['display'][$view_mode]['settings'];
+  $type = $instance['display'][$view_mode]['type'];
+  $default_settings = field_info_formatter_settings($type);
+  $infos = array();
+
+  foreach ($settings as $name => $setting) {
+    // When switching between our two types, $settings contains both formatter's
+    // settings (temporarily), so we filter by default keys.
+    if (!array_key_exists($name, $default_settings)) {
+      continue;
+    }
+    switch ($name) {
+      case 'prevnext':
+      case 'pagedots':
+      case 'wraparound':
+      case 'freescroll':
+      case 'cellalignmiddle':
+      case 'cellpadding':
+      case 'prevnext_main':
+      case 'prevnext_thumbs':
+        $value = ($setting) ? t('Yes') : t('No');
+        $infos[] = $name . ': ' . $value;
+        break;
+
+      case 'perpage':
+      case 'moveby':
+        $infos[] = $name . ': ' . $setting . ' ' . t('item(s)');
+        break;
+
+      case 'autoplay':
+        $value = !($setting) ? t('Off') : $setting . ' ' . t('seconds');
+        $infos[] = $name . ': ' . $value;
+        break;
+
+      case 'image_style':
+      case 'image_caption':
+        if ($field['type'] == 'image') {
+          $infos[] = $name . ': ' . $setting;
+        }
+        break;
+
+      default:
+        $infos[] = $name . ': ' . $setting;
+    }
+  }
+  return theme('item_list', array('type' => 'ul', 'items' => $infos));
+}
+
+/**
+ * Helper function to convert settings to flickity options.
+ * @param array $settings
+ *   Options from settings form.
+ * @return array
+ */
+function _flickity_carousels_options_from_settings(array $settings) {
+  $flk_options = array(
+    'resize' => FALSE,// We do our own thing.
+    'wrapAround' => (bool) $settings['wraparound'],
+    'prevNextButtons' => (bool) $settings['prevnext'],
+    'pageDots' => (bool) $settings['pagedots'],
+  );
+
+  // No Flickity options, but custom ones for our resize JS.
+  $flk_options['perPage'] = (int) $settings['perpage'];
+  if ($settings['perpage'] > 1) {
+    $flk_options['breakpoint'] = $settings['breakpoint'] * 16;
+  }
+  else {
+    $flk_options['breakpoint'] = 0;
+  }
+
+  // In Flickity with fade effect groupCells has precedence over CSS controlled
+  // items per page.
+  if ($settings['effect'] == 'fade') {
+    $flk_options['fade'] = TRUE;
+    $flk_options['moveBy'] = 0;
+    $flk_options['groupCells'] = (int) $settings['perpage'];
+  }
+  // With slide effect we can handle items-per-page and groupCells (amount of
+  // moved items) indepedently.
+  else {
+    $flk_options['moveBy'] = (int) $settings['moveby'];
+    if ($settings['moveby'] > 0) {
+      $flk_options['groupCells'] = (int) $settings['moveby'];
+    }
+    else {
+      $flk_options['groupCells'] = '100%';
+    }
+  }
+
+  if ($settings['autoplay']) {
+    $flk_options['autoPlay'] = $settings['autoplay'] * 1000;
+  }
+  if ($settings['freescroll']) {
+    $flk_options['freeScroll'] = TRUE;
+  }
+
+  if ($settings['direction'] == 'follow_lang') {
+    global $language;
+    $flk_options['rightToLeft'] = ($language->direction == LANGUAGE_RTL);
+  }
+  else {
+    $flk_options['rightToLeft'] = ($settings['direction'] == 'rtl');
+  }
+  // The default is "center", which usually looks quite odd with most setups.
+  if ($flk_options['rightToLeft']) {
+    $flk_options['cellAlign'] = 'right';
+  }
+  else {
+    $flk_options['cellAlign'] = 'left';
+  }
+
+  // Animation speed.
+  if ($settings['speed'] != 'default') {
+    if ($settings['speed'] == 'faster') {
+      $flk_options['selectedAttraction'] = 0.074;
+      $flk_options['friction'] = 0.45;
+    }
+    else {
+      $flk_options['selectedAttraction'] = 0.0125;
+      $flk_options['friction'] = 0.2;
+    }
+  }
+
+  return $flk_options;
+}
