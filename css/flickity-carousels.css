@@ -60,13 +60,11 @@
   padding: .5em 1em;
   border: none;
   flex-grow: 1;
-  /* opinionated colors... */
   background: #f7f7f7;
   color: #444;
 }
 .flickity-carousel-sidebar-wrapper .button-sidebar button.active {
-  background: #0074bd;/* also opinionated */
-  color: #fff;
+  background: #fff;
 }
 @media (min-width: 62em) {
   .flickity-carousel-sidebar-wrapper {
@@ -116,7 +114,7 @@
   max-width: 170px;
 }
 .flickity-gallery-wrapper .gallery-thumbs .is-nav-selected .cell-inner img {
-  outline: 2px solid #42b8d2;/* @todo another opinionated color. */
+  outline: 3px solid #6bb9ca;
 }
 .flickity-gallery-wrapper .gallery-main img,
 .flickity-gallery-wrapper .gallery-thumbs img {
