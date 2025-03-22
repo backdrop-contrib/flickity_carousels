@@ -2,6 +2,7 @@
 /**
  * @file
  */
+
 require_once __DIR__ . '/flickity_carousels.formatter_form.inc';
 
 /**
@@ -212,9 +213,9 @@ function flickity_carousels_field_formatter_view($entity_type, $entity, $field, 
     // For theme_hook_suggestions.
     $element['#field_type'] = $field['type'];
     $element['#field_name'] = $field['field_name'];
-    // We also have to take care of the label, as we bypass theme_field(), but we
-    // ignore "inline", as that never makes sense with a slider, which is always a
-    // block element.
+    // We also have to take care of the label, as we bypass theme_field(), but
+    // we ignore "inline", as that never makes sense with a slider, which is
+    // always a block element.
     $element['#label'] = check_plain($instance['label']);
     $element['#label_hidden'] = ($display['label'] == 'hidden');
     $element['#items'] = $carousel_items;
@@ -290,7 +291,12 @@ function flickity_carousels_field_formatter_view($entity_type, $entity, $field, 
       'prevNextButtons' => ($settings['prevnext_main']),
     ));
 
-    $main_classes = array('flickity-carousel', 'perpage-1', 'center-align', 'gallery-main');
+    $main_classes = array(
+      'flickity-carousel',
+      'perpage-1',
+      'center-align',
+      'gallery-main',
+    );
     $unique_main_class = 'gallery-main-' . backdrop_random_key(8);
     $main_classes[] = $unique_main_class;
     $element['#thumb_attributes']['data-flickity-options'] = json_encode(array(
@@ -305,7 +311,11 @@ function flickity_carousels_field_formatter_view($entity_type, $entity, $field, 
       'asNavFor' => '.' . $unique_main_class,
     ));
 
-    $thumb_classes = array('flickity-carousel', 'center-align', 'gallery-thumbs');
+    $thumb_classes = array(
+      'flickity-carousel',
+      'center-align',
+      'gallery-thumbs',
+    );
     global $language;
     if ($language->direction == LANGUAGE_RTL) {
       $main_classes[] = 'direction-rtl';

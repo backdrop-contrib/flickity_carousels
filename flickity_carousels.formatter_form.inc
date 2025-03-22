@@ -1,10 +1,11 @@
 <?php
 /**
  * @file
+ * Form callbacks for Flickity carousel formatter forms.
  */
 
 /**
- *
+ * Form callback for default formatter.
  */
 function _flickity_carousels_populate_formatter_form_default(array $field, array $instance, $view_mode) {
   $display = $instance['display'][$view_mode];
@@ -152,7 +153,7 @@ function _flickity_carousels_populate_formatter_form_default(array $field, array
 }
 
 /**
- *
+ * Form callback for gallery formatter.
  */
 function _flickity_carousels_populate_formatter_form_gallery(array $field, array $instance, $view_mode) {
   $element = array();
