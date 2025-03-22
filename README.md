@@ -1,10 +1,9 @@
 # Flickity Carousels
 
-Carousels, sliders and galleries for fields and views, utilizing the
-capabilities of [Flickity](https://flickity.metafizzy.co/).
+Carousels, slideshows and galleries for fields and views, utilizing [Flickity](https://flickity.metafizzy.co/).
 
 Ships with two field formatters and two views style plugins.
-Flick, swipe, click through your content - also supports keyboard navigation.
+Flick, swipe, click through your content, also supports keyboard navigation.
 
 ## Features
 
@@ -14,7 +13,7 @@ Flick, swipe, click through your content - also supports keyboard navigation.
 
 ![gallery](https://raw.githubusercontent.com/backdrop-contrib/flickity_carousels/1.x-1.x/screenshots/gallery.png)
 
-Create stunning image galleries with thumbnail navigation from any multi-value
+Create lovely image galleries with thumbnail navigation from any multi-value
 image field within minutes.
 
 *Supported field type:* image
@@ -24,7 +23,7 @@ image field within minutes.
 ![carousel](https://raw.githubusercontent.com/backdrop-contrib/flickity_carousels/1.x-1.x/screenshots/carousel.png)
 
 Rotating banners from image or long text fields, swipe through photos or
-chapters of text.
+chapters of text. With several settings to tweak.
 
 *Supported field types:* image, text_long
 
@@ -34,9 +33,9 @@ chapters of text.
 
 ![carousel with sidebar](https://raw.githubusercontent.com/backdrop-contrib/flickity_carousels/1.x-1.x/screenshots/sidebar.png)
 
-Showcase news or products, anything you can build from nodes, user accounts, or
-any kind of views fields. With automatic button sidebar.
-
+Showcase news or products in a compact, yet eye catching way. Anything you can
+build from nodes, user accounts, or any kind of views fields.
+With automatic button navigation sidebar.
 
 #### Flickity carousel
 
@@ -44,7 +43,7 @@ any kind of views fields. With automatic button sidebar.
 
 The most flexible one, anything you can build with views, even thumbnail or text
 navigations, if using Flickity carousel as attachment of a Flickity carousel.
-
+With several settings to tweak.
 
 ## Installation
 
