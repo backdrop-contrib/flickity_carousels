@@ -4,12 +4,12 @@
 }
 
 /* Prevent button covering too much of content. */
-.flickity-carousel.direction-ltr .flickity-prev-next-button.previous,
-.flickity-carousel.direction-rtl .flickity-prev-next-button.next {
+.flickity-carousel.direction-ltr:not(.is-fullscreen) .flickity-prev-next-button.previous,
+.flickity-carousel.direction-rtl:not(.is-fullscreen) .flickity-prev-next-button.next {
   left: -0.5em;
 }
-.flickity-carousel.direction-ltr .flickity-prev-next-button.next,
-.flickity-carousel.direction-rtl .flickity-prev-next-button.previous {
+.flickity-carousel.direction-ltr:not(.is-fullscreen) .flickity-prev-next-button.next,
+.flickity-carousel.direction-rtl:not(.is-fullscreen) .flickity-prev-next-button.previous {
   right: -0.5em;
 }
 
@@ -119,4 +119,25 @@
 .flickity-gallery-wrapper .gallery-main img,
 .flickity-gallery-wrapper .gallery-thumbs img {
   vertical-align: bottom;
+}
+/* Fullscreen. */
+.flickity-carousel.is-fullscreen {
+  z-index: 998;
+}
+.admin-bar .flickity-carousel.is-fullscreen {
+  top: var(--admin-bar-height);
+  height: calc(100vh - var(--admin-bar-height));
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+.flickity-gallery-wrapper .flickity-carousel.is-fullscreen .gallery-main {
+  margin: 0;
+}
+.flickity-gallery-wrapper .flickity-carousel.is-fullscreen .cell-inner {
+  padding-inline: 1em;
+}
+.flickity-gallery-wrapper .flickity-carousel.is-fullscreen .carousel-item img {
+  /*display: block;*/
+  max-height: calc(100vh - 60px);/* @todo figure out what's going on here with cutoff images... resize()? */
+  width: auto;
 }

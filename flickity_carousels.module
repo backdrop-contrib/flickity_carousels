@@ -37,10 +37,12 @@ function flickity_carousels_library_info() {
       $module_path . '/libraries/flickity/flickity.pkgd.min.js' => array(),
       $module_path . '/libraries/flickity/flickity-fade.js' => array(),
       $module_path . '/libraries/flickity/as-nav-for.js' => array(),
+      $module_path . '/libraries/flickity/fullscreen.js' => array(),
     ),
     'css' => array(
       $module_path . '/libraries/flickity/flickity.min.css' => array(),
       $module_path . '/libraries/flickity/flickity-fade.css' => array(),
+      $module_path . '/libraries/flickity/fullscreen.css' => array(),
     ),
   );
 
@@ -289,6 +291,7 @@ function flickity_carousels_field_formatter_view($entity_type, $entity, $field, 
       'fade' => ($settings['effect'] == 'fade'),
       'pageDots' => FALSE,
       'prevNextButtons' => ($settings['prevnext_main']),
+      'fullscreen' => TRUE,// @todo formatter setting.
     ));
 
     $main_classes = array(
