@@ -106,7 +106,10 @@
 
 /* Image galleries. */
 .flickity-gallery-wrapper .gallery-main {
-  margin-bottom: 8px;
+  margin-bottom: 4px;
+}
+.flickity-gallery-wrapper .gallery-main .carousel-item {
+  margin-right: 2em;
 }
 .flickity-gallery-wrapper .gallery-thumbs .cell-inner {
   padding: 4px;
