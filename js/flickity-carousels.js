@@ -46,6 +46,17 @@
       element.classList.add('cell-full-height');
     },
     /**
+     * @param object slider
+     */
+    localizeButtons: function (slider) {
+      let prevLabel = Backdrop.t('Previous');
+      slider.prevButton.element.ariaLabel = prevLabel;
+      slider.prevButton.element.firstElementChild.firstElementChild.textContent = prevLabel;
+      let nextLabel = Backdrop.t('Next');
+      slider.nextButton.element.ariaLabel = nextLabel;
+      slider.nextButton.element.firstElementChild.firstElementChild.textContent = nextLabel;
+    },
+    /**
      * Backdrop.attachBehavior.
      */
     attach: function () {
@@ -78,6 +89,8 @@
           // the breakpoint.
           widget.sliderResize(element, slider);
         }
+
+        widget.localizeButtons(slider);
 
         // Alternative to Flickity's own resize handling to also handle
         // items-per-page breakpoints.
