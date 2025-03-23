@@ -51,6 +51,7 @@
     localizeButtons: function (slider) {
       let prevLabel = Backdrop.t('Previous');
       slider.prevButton.element.ariaLabel = prevLabel;
+      // Descend to the title element inside the svg.
       slider.prevButton.element.firstElementChild.firstElementChild.textContent = prevLabel;
       let nextLabel = Backdrop.t('Next');
       slider.nextButton.element.ariaLabel = nextLabel;
