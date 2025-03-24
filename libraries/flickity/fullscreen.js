@@ -58,7 +58,7 @@ proto.exitFullscreen = function() {
 proto._changeFullscreen = function( isView ) {
   if ( this.isFullscreen === isView ) return;
   const flkty = this;
-  const promise = new Promise(function (resolve, reject) {
+  const notMoving = new Promise(function (resolve, reject) {
     if (!flkty.isAnimating) {
       resolve();
     }
@@ -66,7 +66,7 @@ proto._changeFullscreen = function( isView ) {
       flkty.on('settle', resolve);
     }
   });
-  promise.then(function () {
+  notMoving.then(function () {
     flkty.isFullscreen = isView;
     let classMethod = isView ? 'add' : 'remove';
     document.documentElement.classList[ classMethod ]('is-flickity-fullscreen');
