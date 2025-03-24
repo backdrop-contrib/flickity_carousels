@@ -138,6 +138,19 @@
 }
 .flickity-gallery-wrapper .flickity-carousel.is-fullscreen .carousel-item img {
   /*display: block;*/
-  max-height: calc(100vh - 60px);/* @todo figure out what's going on here with cutoff images... resize()? */
+  max-height: calc(100vh - 40px);/* @todo figure out what's going on here with cutoff images... resize()? */
   width: auto;
+}
+.admin-bar .flickity-gallery-wrapper .flickity-carousel.is-fullscreen .carousel-item img {
+  max-height: calc(100vh - var(--admin-bar-height) - 40px);
+}
+.flickity-gallery-wrapper .flickity-fullscreen-button {
+  width: 32px;
+  height: 32px;
+}
+.flickity-gallery-wrapper .flickity-fullscreen-button .flickity-button-icon {
+  width: 22px;
+  height: 22px;
+  top: 5px;
+  left: 5px;
 }
