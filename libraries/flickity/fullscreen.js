@@ -1,6 +1,9 @@
 /*!
  * Flickity fullscreen v2.0.0
  * Enable fullscreen view for Flickity
+ * Original code by Metafizzy, patched by Indigoxela.
+ * @see https://github.com/metafizzy/flickity-fullscreen/issues/32
+ * @see https://github.com/metafizzy/flickity-fullscreen/issues/43
  */
 
 ( function( window, factory ) {
@@ -54,15 +57,25 @@ proto.exitFullscreen = function() {
 
 proto._changeFullscreen = function( isView ) {
   if ( this.isFullscreen === isView ) return;
-
-  this.isFullscreen = isView;
-  let classMethod = isView ? 'add' : 'remove';
-  document.documentElement.classList[ classMethod ]('is-flickity-fullscreen');
-  this.element.classList[ classMethod ]('is-fullscreen');
-  this.resize();
-  // HACK extra reposition on fullscreen for images
-  if ( this.isFullscreen ) this.reposition();
-  this.dispatchEvent( 'fullscreenChange', null, [ isView ] );
+  const flkty = this;
+  const promise = new Promise(function (resolve, reject) {
+    if (!flkty.isAnimating) {
+      resolve();
+    }
+    else {
+      flkty.on('settle', resolve);
+    }
+  });
+  promise.then(function (value) {
+    flkty.isFullscreen = isView;
+    let classMethod = isView ? 'add' : 'remove';
+    document.documentElement.classList[ classMethod ]('is-flickity-fullscreen');
+    flkty.element.classList[ classMethod ]('is-fullscreen');
+    flkty.resize();
+    // HACK extra reposition on fullscreen for images
+    if ( flkty.isFullscreen ) flkty.reposition();
+    flkty.dispatchEvent( 'fullscreenChange', null, [ isView ] );
+  });
 };
 
 proto.toggleFullscreen = function() {
@@ -89,7 +102,7 @@ proto.setGallerySize = function() {
 // ----- keyboard ----- //
 
 // ESC key closes full screen
-Flickity.keyboardHandlers[27] = function() {
+Flickity.keyboardHandlers['Escape'] = function() {
   this.exitFullscreen();
 };
 
