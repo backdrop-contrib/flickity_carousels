@@ -49,13 +49,15 @@
      * @param object slider
      */
     localizeButtons: function (slider) {
-      let prevLabel = Backdrop.t('Previous');
-      slider.prevButton.element.ariaLabel = prevLabel;
-      // Descend to the title element inside the svg.
-      slider.prevButton.element.firstElementChild.firstElementChild.textContent = prevLabel;
-      let nextLabel = Backdrop.t('Next');
-      slider.nextButton.element.ariaLabel = nextLabel;
-      slider.nextButton.element.firstElementChild.firstElementChild.textContent = nextLabel;
+      if (typeof slider.prevButton !== 'undefined') {
+        let prevLabel = Backdrop.t('Previous');
+        slider.prevButton.element.ariaLabel = prevLabel;
+        // Descend to the title element inside the svg.
+        slider.prevButton.element.firstElementChild.firstElementChild.textContent = prevLabel;
+        let nextLabel = Backdrop.t('Next');
+        slider.nextButton.element.ariaLabel = nextLabel;
+        slider.nextButton.element.firstElementChild.firstElementChild.textContent = nextLabel;
+      }
     },
     /**
      * Backdrop.attachBehavior.
