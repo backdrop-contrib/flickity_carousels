@@ -157,6 +157,7 @@ function flickity_carousels_field_formatter_info() {
       'image_style_main' => 'large',
       'image_style_thumbs' => 'thumbnail',
       'effect' => 'fade',
+      'fullscreen' => FALSE,
       'prevnext_main' => TRUE,
       'prevnext_thumbs' => TRUE,
     ),
@@ -291,7 +292,7 @@ function flickity_carousels_field_formatter_view($entity_type, $entity, $field, 
       'fade' => ($settings['effect'] == 'fade'),
       'pageDots' => FALSE,
       'prevNextButtons' => ($settings['prevnext_main']),
-      'fullscreen' => TRUE,// @todo formatter setting.
+      'fullscreen' => ($settings['fullscreen']),
     ));
 
     $main_classes = array(
@@ -387,6 +388,7 @@ function flickity_carousels_field_formatter_settings_summary($field, $instance, 
       case 'cellpadding':
       case 'prevnext_main':
       case 'prevnext_thumbs':
+      case 'fullscreen':
         $value = ($setting) ? t('Yes') : t('No');
         $infos[] = $name . ': ' . $value;
         break;
