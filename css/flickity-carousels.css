@@ -137,12 +137,11 @@
   padding-inline: 1em;
 }
 .flickity-gallery-wrapper .flickity-carousel.is-fullscreen .carousel-item img {
-  /*display: block;*/
-  max-height: calc(100vh - 40px);/* @todo figure out what's going on here with cutoff images... resize()? */
+  max-height: calc(100dvh - 20px);
   width: auto;
 }
 .admin-bar .flickity-gallery-wrapper .flickity-carousel.is-fullscreen .carousel-item img {
-  max-height: calc(100vh - var(--admin-bar-height) - 40px);
+  max-height: calc(100dvh - var(--admin-bar-height) - 20px);
 }
 .flickity-gallery-wrapper .flickity-fullscreen-button {
   width: 32px;
