@@ -123,10 +123,11 @@
 /* Fullscreen. */
 .flickity-carousel.is-fullscreen {
   z-index: 998;
+  height: 100dvh;
 }
 .admin-bar .flickity-carousel.is-fullscreen {
   top: var(--admin-bar-height);
-  height: calc(100vh - var(--admin-bar-height));
+  height: calc(100dvh - var(--admin-bar-height));
   padding-bottom: 0;
   margin-bottom: 0;
 }
