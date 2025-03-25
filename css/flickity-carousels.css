@@ -124,12 +124,14 @@
 .flickity-carousel.is-fullscreen {
   z-index: 998;
   height: 100dvh;
+  margin-bottom: 0;
 }
 .admin-bar .flickity-carousel.is-fullscreen {
   top: var(--admin-bar-height);
   height: calc(100dvh - var(--admin-bar-height));
+}
+.flickity-gallery-wrapper .flickity-carousel.is-fullscreen {
   padding-bottom: 0;
-  margin-bottom: 0;
 }
 .flickity-gallery-wrapper .flickity-carousel.is-fullscreen .gallery-main {
   margin: 0;
