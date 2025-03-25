@@ -9,6 +9,9 @@ Flick, swipe, click through your content, also supports keyboard navigation.
 
 ### Field formatters:
 
+For multi-value fields of supported field types.
+These field formatters also play nicely with Layout field blocks and Paragraphs.
+
 #### Flickity gallery
 
 ![gallery](https://raw.githubusercontent.com/backdrop-contrib/flickity_carousels/1.x-1.x/screenshots/gallery.png)
@@ -28,6 +31,9 @@ chapters of text. With several settings to tweak.
 *Supported field types:* image, text_long
 
 ### Views styles:
+
+For views pages, blocks and attachments. Select the desired style in the "Format" section.
+You'll usually want to turn the (default) views pager off (uncheck "Use a pager").
 
 #### Flickity carousel with sidebar
 
