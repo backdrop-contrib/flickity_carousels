@@ -58,6 +58,14 @@
         slider.nextButton.element.ariaLabel = nextLabel;
         slider.nextButton.element.firstElementChild.firstElementChild.textContent = nextLabel;
       }
+      if (typeof slider.viewFullscreenButton !== 'undefined') {
+        let viewFullLabel = Backdrop.t('View full-screen');
+        slider.viewFullscreenButton.element.title = viewFullLabel;
+        slider.viewFullscreenButton.element.ariaLabel = viewFullLabel;
+        let exitFullLabel = Backdrop.t('Exit full-screen');
+        slider.exitFullscreenButton.element.title = exitFullLabel;
+        slider.exitFullscreenButton.element.ariaLabel = exitFullLabel;
+      }
     },
     /**
      * Backdrop.attachBehavior.
