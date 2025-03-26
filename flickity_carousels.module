@@ -490,3 +490,15 @@ function _flickity_carousels_options_from_settings(array $settings) {
 
   return $flk_options;
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Strip our formatters from options in the "Manage file display" form.
+ */
+function flickity_carousels_form_file_display_form_alter(&$form, &$form_state, $form_id) {
+  if (!empty($form['display']['formatter'])) {
+    unset($form['display']['formatter']['#options']['file_field_flickity_gallery']);
+    unset($form['display']['formatter']['#options']['file_field_flickity_carousel']);
+  }
+}
