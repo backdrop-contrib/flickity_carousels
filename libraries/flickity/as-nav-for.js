@@ -1,6 +1,7 @@
 /*!
  * Flickity asNavFor v3.0.0
  * enable asNavFor for Flickity
+ * Original code by Metafizzy, patched by Indigoxela to fix window resize.
  */
 
 ( function( window, factory ) {
@@ -32,7 +33,7 @@ Flickity.create.asNavFor = function() {
 
   let asNavForOption = this.options.asNavFor;
   if ( !asNavForOption ) return;
-
+  this.captureResize();
   // HACK do async, give time for other flickity to be initalized
   setTimeout( () => {
     this.setNavCompanion( asNavForOption );
@@ -40,6 +41,23 @@ Flickity.create.asNavFor = function() {
 };
 
 let proto = Flickity.prototype;
+
+// Custom adaption to get asNavFor working properly with window resize.
+proto.captureResize = function () {
+  const flkty = this;
+  flkty.windowResizing = false;
+  // This event fires often, but we need to make sure, we set the state
+  // immediately.
+  window.addEventListener('resize', function () {
+    flkty.windowResizing = true;
+  });
+  // Does not fire as often. Set propery back after a short while.
+  flkty.on('resize', function () {
+    setTimeout(function () {
+      flkty.windowResizing = false;
+    }, 100);
+  });
+};
 
 proto.setNavCompanion = function( elem ) {
   elem = utils.getQueryElement( elem );
@@ -49,8 +67,10 @@ proto.setNavCompanion = function( elem ) {
 
   this.navCompanion = companion;
   // companion select
+  const flkty = this;
   this.onNavCompanionSelect = () => {
-    this.navCompanionSelect();
+    // Set isInstant to true while resizing.
+    this.navCompanionSelect(flkty.windowResizing);
   };
   companion.on( 'select', this.onNavCompanionSelect );
   // click
