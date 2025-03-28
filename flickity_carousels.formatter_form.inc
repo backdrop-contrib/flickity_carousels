@@ -183,6 +183,12 @@ function _flickity_carousels_populate_formatter_form_gallery(array $field, array
     ),
     '#default_value' => $settings['effect'],
   );
+  $element['fullscreen'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Add fullscreen button'),
+    '#default_value' => $settings['fullscreen'],
+    '#description' => t('Adds a button to view the main section in a full width overlay.'),
+  );
   $element['prevnext_main'] = array(
     '#type' => 'checkbox',
     '#title' => t('Previous / next buttons for main item'),
