@@ -183,6 +183,11 @@ function flickity_carousels_field_formatter_view($entity_type, $entity, $field, 
     $carousel_items = array();
     if ($field['type'] == 'image') {
       foreach ($items as $delta => $item) {
+        if (isset($item['is_default'])) {
+          $info = image_get_info($item['uri']);
+          $item['width'] = $info['width'];
+          $item['height'] = $info['height'];
+        }
         $variables = array(
           'uri' => $item['uri'],
           'alt' => $item['alt'],
@@ -255,6 +260,11 @@ function flickity_carousels_field_formatter_view($entity_type, $entity, $field, 
     $gallery_items = $thumb_items = array();
 
     foreach ($items as $delta => $item) {
+      if (isset($item['is_default'])) {
+        $info = image_get_info($item['uri']);
+        $item['width'] = $info['width'];
+        $item['height'] = $info['height'];
+      }
       $variables = array(
         'uri' => $item['uri'],
         'alt' => $item['alt'],
