@@ -170,6 +170,9 @@ function flickity_carousels_field_formatter_info() {
  */
 function flickity_carousels_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
+  if (empty($items)) {
+    return $element;
+  }
   $classes = array('field');
   $classes[] = 'field-name-' . backdrop_html_class($field['field_name']);
   $classes[] = 'field-type-' . backdrop_html_class($field['type']);
