@@ -424,7 +424,10 @@ function flickity_carousels_field_formatter_settings_summary($field, $instance, 
         break;
 
       default:
-        $infos[] = $name . ': ' . $setting;
+        // Prevent conflict with field_wrappers module.
+        if (is_string($setting)) {
+          $infos[] = $name . ': ' . $setting;
+        }
     }
   }
   return theme('item_list', array('type' => 'ul', 'items' => $infos));
