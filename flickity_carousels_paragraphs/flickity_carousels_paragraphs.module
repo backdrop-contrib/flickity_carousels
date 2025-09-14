@@ -1,0 +1,136 @@
+<?php
+/**
+ * @file
+ * Flickity Carousels Paragraphs hooks and common functions.
+ */
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function flickity_carousels_paragraphs_field_formatter_info() {
+  return array(
+    'flickity_paragraphs_formatter' => array(
+      'label' => t('Flickity Paragraphs'),
+      'field types' => array('paragraphs'),
+      'settings' => array(
+        'effect' => 'slide',
+        'prevnext' => TRUE,
+        'pagedots' => TRUE,
+        'perpage' => 1,
+        'moveby' => 1,
+        'wraparound' => FALSE,
+        'freescroll' => FALSE,
+        'breakpoint' => 48,
+        'cellalignmiddle' => FALSE,
+        'cellpadding' => FALSE,
+        'direction' => 'ltr',
+        'autoplay' => 0,
+        'speed' => 'default',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function flickity_carousels_paragraphs_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $infos = array();
+  $settings = $instance['display'][$view_mode]['settings'];
+
+  // Only a subset.
+  foreach ($settings as $name => $setting) {
+    switch ($name) {
+      case 'effect':
+        $infos[] = $name . ': ' . $setting;
+        break;
+
+      case 'prevnext':
+      case 'pagedots':
+        $value = ($setting) ? t('Yes') : t('No');
+        $infos[] = $name . ': ' . $value;
+        break;
+
+      case 'perpage':
+      case 'moveby':
+        $infos[] = $name . ': ' . $setting . ' ' . t('item(s)');
+        break;
+      
+      case 'autoplay':
+        $value = !($setting) ? t('Off') : $setting . ' ' . t('seconds');
+        $infos[] = $name . ': ' . $value;
+        break;
+    }
+  }
+  return theme('item_list', array('type' => 'ul', 'items' => $infos));
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function flickity_carousels_paragraphs_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  if (empty($field)) {
+    return;
+  }
+  $element = _flickity_carousels_populate_formatter_form_default($field, $instance, $view_mode);
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function flickity_carousels_paragraphs_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+  if (empty($items)) {
+    return $element;
+  }
+
+  $classes = array();
+  $settings = $display['settings'];
+  $carousel_items = array();
+  $needs_access_check = module_exists('paragraphs_bundle_permissions');
+
+  foreach ($items as $delta => $item) {
+    if ($paragraph = entity_load('paragraphs_item', $item['value'])) {
+      if ($needs_access_check && !entity_access('view', 'paragraphs_item', $paragraph)) {
+        continue;
+      }
+      if ($paragraph->status) {
+        $entity_view = entity_view($paragraph);
+        $carousel_items[] = backdrop_render($entity_view);
+      }
+    }
+  }
+
+  $element['#theme'] = 'flickity_carousel_field';
+  $element['#field_type'] = $field['type'];
+  $element['#field_name'] = $field['field_name'];
+  $element['#label'] = check_plain($instance['label']);
+  $element['#label_hidden'] = ($display['label'] == 'hidden');
+  $element['#items'] = $carousel_items;
+  $element['#item_classes'] = array('carousel-item');
+  $element['#wrapper_classes'] = $classes;
+
+  $carousel_classes = array('flickity-carousel');
+  if ($settings['cellalignmiddle']) {
+    $carousel_classes[] = 'center-align';
+  }
+  if ($settings['cellpadding']) {
+    $carousel_classes[] = 'cell-padding';
+  }
+  if ($settings['perpage']) {
+    $carousel_classes[] = 'perpage-' . $settings['perpage'];
+  }
+  $element['#carousel_classes'] = $carousel_classes;
+
+  $flk_options = _flickity_carousels_options_from_settings($settings);
+  $element['#carousel_attributes']['data-flickity-options'] = json_encode($flk_options);
+
+  $element['#attached']['library'][] = array(
+    'flickity_carousels',
+    'backdrop.flickity',
+  );
+
+  return $element;
+}
