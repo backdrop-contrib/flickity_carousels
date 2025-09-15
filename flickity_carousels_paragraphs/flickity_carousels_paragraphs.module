@@ -86,7 +86,6 @@ function flickity_carousels_paragraphs_field_formatter_view($entity_type, $entit
     return $element;
   }
 
-  $classes = array();
   $settings = $display['settings'];
   $carousel_items = array();
   $needs_access_check = module_exists('paragraphs_bundle_permissions');
@@ -110,7 +109,7 @@ function flickity_carousels_paragraphs_field_formatter_view($entity_type, $entit
   $element['#label_hidden'] = ($display['label'] == 'hidden');
   $element['#items'] = $carousel_items;
   $element['#item_classes'] = array('carousel-item');
-  $element['#wrapper_classes'] = $classes;
+  $element['#wrapper_classes'] = array('flickity-carousel-paragraphs');
 
   $carousel_classes = array('flickity-carousel');
   if ($settings['cellalignmiddle']) {
@@ -122,9 +121,15 @@ function flickity_carousels_paragraphs_field_formatter_view($entity_type, $entit
   if ($settings['perpage']) {
     $carousel_classes[] = 'perpage-' . $settings['perpage'];
   }
-  $element['#carousel_classes'] = $carousel_classes;
 
   $flk_options = _flickity_carousels_options_from_settings($settings);
+  if ($flk_options['rightToLeft']) {
+    $carousel_classes[] = 'direction-rtl';
+  }
+  else {
+    $carousel_classes[] = 'direction-ltr';
+  }
+  $element['#carousel_classes'] = $carousel_classes;
   $element['#carousel_attributes']['data-flickity-options'] = json_encode($flk_options);
 
   $element['#attached']['library'][] = array(
