@@ -1,0 +1,7 @@
+type = module
+name = Flickity Carousels Paragraphs
+description = Flickity Carousels field formatter for Paragraph fields.
+backdrop = 1.x
+
+dependencies[] = flickity_carousels
+dependencies[] = paragraphs

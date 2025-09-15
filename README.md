@@ -30,6 +30,14 @@ chapters of text. With several settings to tweak.
 
 *Supported field types:* image, text_long
 
+#### Flickity carousel paragraphs (submodule)
+
+Swipe through Paragraphs, this submodule depends on the [Paragraphs](https://backdropcms.org/project/paragraphs)
+module. Useful for nested paragraphs. Besides the field type very similar to
+"Flickity carousel".
+
+*Supported field types:* paragraphs
+
 ### Views styles:
 
 For views pages, blocks and attachments. Select the desired style in the "Format" section.
