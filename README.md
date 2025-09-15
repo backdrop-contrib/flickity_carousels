@@ -2,7 +2,7 @@
 
 Carousels, slideshows and galleries for fields and views, utilizing [Flickity](https://flickity.metafizzy.co/).
 
-Ships with two field formatters and two views style plugins.
+Ships with three field formatters and two views style plugins.
 Flick, swipe, click through your content, also supports keyboard navigation.
 
 ## Features
