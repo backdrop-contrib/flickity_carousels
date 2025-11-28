@@ -22,7 +22,7 @@
   box-sizing: content-box;
   margin: 0;
 }
-.flickity-carousel .carousel-item img {
+.flickity-carousel .carousel-item img:not([class]) {
   margin: 0;
 }
 
