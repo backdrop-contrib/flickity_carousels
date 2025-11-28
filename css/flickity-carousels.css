@@ -13,6 +13,19 @@
   right: -0.5em;
 }
 
+/* Bootstrap themes mangle Flickity styles - override to fix. */
+.flickity-carousel .carousel-item {
+  position: absolute;
+  float: none;
+  display: block;
+  width: auto;
+  box-sizing: content-box;
+  margin: 0;
+}
+.flickity-carousel .carousel-item img {
+  margin: 0;
+}
+
 /* Settings via wrapper item class. */
 .flickity-carousel.cell-full-height .carousel-item {
   min-height: 100%;
