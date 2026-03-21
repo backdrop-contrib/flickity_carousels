@@ -1,0 +1,61 @@
+<?php
+/**
+ * @file
+ */
+
+/**
+ * Test hook implementation.
+ */
+class FlickityCarouselsHookTest extends BackdropWebTestCase {
+
+  protected $profile = 'testing';
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    parent::setUp('views_ui', 'flickity_carousels', 'flickity_carousels_test');
+
+    // Dummy content.
+    $type = $this->backdropCreateContentType();
+    $this->backdropCreateNode(array('title' => 'Test content 1', 'type' => $type->type));
+    $this->backdropCreateNode(array('title' => 'Test content 2', 'type' => $type->type));
+
+    // Create and log in a user with administer views permission.
+    $views_admin = $this->backdropCreateUser(array(
+      'administer views',
+      'access all views',
+      'bypass node access',
+    ));
+    $this->backdropLogin($views_admin);
+    return TRUE;
+  }
+
+  /**
+   * Test that the alter hook works.
+   */
+  public function testAlteredAttribute() {
+    $path = $this->randomName(16);
+    $page_title = 'My flickity hook page';
+    $view = array();
+    $view['human_name'] = $this->randomName(16);
+    $view['name'] = strtolower($this->randomName(16));
+    $view['description'] = $this->randomName(16);
+    $view['page[create]'] = 1;
+    $view['page[style][style_plugin]'] = 'flickity_carousels_default';
+    $view['page[title]'] = $page_title;
+    $view['page[path]'] = $path;
+    $this->backdropPost('admin/structure/views/add', $view, t('Save view'));
+    // Creation worked.
+    $this->assertText($page_title);
+    $this->assertText('Test content');
+    // Find element and check attribute.
+    $elements = $this->xpath('//*[contains(@class,:class)]/@data-flickity-options', array(
+      ':class' => 'flickity-carousel',
+    ));
+    $this->assertEqual(count($elements), 1, 'Flickity carousel found on page.');
+    $attribute_value = '{"resize":false,"wrapAround":false,"prevNextButtons":true,"pageDots":true,"perPage":1,"breakpoint":0,"moveBy":1,"groupCells":1,"rightToLeft":false,"cellAlign":"left","autoPlay":3000,"pauseAutoPlayOnHover":false,"friction":0.25}';
+    $this->assertEqual((string) $elements[0], $attribute_value, 'Data attribute has expected value');
+  }
+
+}

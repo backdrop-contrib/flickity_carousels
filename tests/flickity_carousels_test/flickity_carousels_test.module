@@ -1,0 +1,14 @@
+<?php
+/**
+ * @file
+ * Test module for Flickity Carousels.
+ */
+
+/**
+ * Implements hook_flickity_carousels_views_styles_flickity_options_alter().
+ */
+function flickity_carousels_test_flickity_carousels_views_styles_flickity_options_alter(array &$options, array $context) {
+  $options['autoPlay'] = 3000;
+  $options['pauseAutoPlayOnHover'] = FALSE;
+  $options['friction'] = 0.25;
+}
