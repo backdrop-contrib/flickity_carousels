@@ -55,7 +55,7 @@ function flickity_carousels_paragraphs_field_formatter_settings_summary($field, 
       case 'moveby':
         $infos[] = $name . ': ' . $setting . ' ' . t('item(s)');
         break;
-      
+
       case 'autoplay':
         $value = !($setting) ? t('Off') : $setting . ' ' . t('seconds');
         $infos[] = $name . ': ' . $value;

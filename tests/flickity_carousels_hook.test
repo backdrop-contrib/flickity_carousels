@@ -18,8 +18,14 @@ class FlickityCarouselsHookTest extends BackdropWebTestCase {
 
     // Dummy content.
     $type = $this->backdropCreateContentType();
-    $this->backdropCreateNode(array('title' => 'Test content 1', 'type' => $type->type));
-    $this->backdropCreateNode(array('title' => 'Test content 2', 'type' => $type->type));
+    $this->backdropCreateNode(array(
+      'title' => 'Test content 1',
+      'type' => $type->type,
+    ));
+    $this->backdropCreateNode(array(
+      'title' => 'Test content 2',
+      'type' => $type->type,
+    ));
 
     // Create and log in a user with administer views permission.
     $views_admin = $this->backdropCreateUser(array(
