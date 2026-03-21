@@ -2,10 +2,10 @@
 name = Flickity Carousels Basic
 description = Tests basic handling and output in Views UI.
 group = Flickity Carousels
-file = flickity_carousels.tests
+file = flickity_carousels.test
 
 [FlickityCarouselsHookTest]
 name = Flickity Carousels Hook
 description = Tests hook implementation.
 group = Flickity Carousels
-file = flickity_carousels_hook.tests
+file = flickity_carousels_hook.test
