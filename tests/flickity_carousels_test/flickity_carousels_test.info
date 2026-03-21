@@ -1,0 +1,5 @@
+type = module
+hidden = true
+name = Flickity Carousels Test
+description = Test hook implementation
+backdrop = 1.x
