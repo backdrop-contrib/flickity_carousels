@@ -43,6 +43,14 @@ function template_preprocess_flickity_carousels_views_default(&$variables) {
     }
   }
 
+  // Let modules alter options for the Flickity library.
+  $context = array(
+    'view_name' => $view->name,
+    'display_id' => $view->current_display,
+    'is_attachment' => !empty($view->is_attachment),
+  );
+  backdrop_alter('flickity_carousels_views_styles_flickity_options', $flk_options, $context);
+
   $variables['attributes']['data-flickity-options'] = json_encode($flk_options);
 
   backdrop_add_library('flickity_carousels', 'backdrop.flickity');
@@ -111,6 +119,13 @@ function template_preprocess_flickity_carousels_views_sidebar(&$variables) {
       }
     }
   }
+  // Let modules alter options for the Flickity library.
+  $context = array(
+    'view_name' => $view->name,
+    'display_id' => $view->current_display,
+    'is_attachment' => !empty($view->is_attachment),
+  );
+  backdrop_alter('flickity_carousels_views_styles_flickity_options', $flk_options, $context);
 
   $variables['attributes']['data-flickity-options'] = json_encode($flk_options);
 
